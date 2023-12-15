@@ -7,7 +7,7 @@ const Itemsdetails = () => {
   return (
     <MainDiv>
       <SearchDiv />
-      <ProductTable/>
+      <ProductTable />
     </MainDiv>
   );
 };

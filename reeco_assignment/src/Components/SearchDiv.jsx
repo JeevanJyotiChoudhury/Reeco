@@ -7,7 +7,7 @@ const SearchDiv = () => {
   return (
     <MainDIV>
       <Search>
-        <Text >Search...</Text>
+        <Text>Search...</Text>
         <IoIosSearch size={"20px"} color={"#a3a3a3"} />
       </Search>
       <PrinterDiv>
@@ -23,7 +23,7 @@ export default SearchDiv;
 const MainDIV = styled.div`
   display: flex;
   justify-content: space-between;
-  padding:25px 35px;
+  padding: 25px 35px;
 `;
 
 const Search = styled.div`
@@ -32,7 +32,7 @@ const Search = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding:0 10px;
+  padding: 0 10px;
   border-radius: 20px;
 `;
 
@@ -40,7 +40,7 @@ const PrinterDiv = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width:13%;
+  width: 13%;
 `;
 
 const OutlineBtn = styled.button`

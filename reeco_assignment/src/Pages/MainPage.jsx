@@ -8,7 +8,7 @@ const MainPage = () => {
     <div>
       <TopNav />
       <OrderDiv />
-      <OrderDetails/>
+      <OrderDetails />
     </div>
   );
 };

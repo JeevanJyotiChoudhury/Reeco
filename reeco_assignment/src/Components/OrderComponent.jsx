@@ -1,14 +1,14 @@
-import React from 'react'
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
-const OrderComponent = ({text1,text2}) => {
+const OrderComponent = ({ text1, text2 }) => {
   return (
     <OrderDIV>
       <StyledH4>{text1}</StyledH4>
       <StyledH3>{text2}</StyledH3>
     </OrderDIV>
   );
-}
+};
 
 export default OrderComponent;
 

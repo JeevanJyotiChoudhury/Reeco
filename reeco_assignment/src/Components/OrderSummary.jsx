@@ -57,10 +57,8 @@ const StyledH4 = styled.h4`
 `;
 
 const IconDiv = styled.div`
-display: grid;
-grid-template-columns: repeat(4,1fr);
-gap:10px 5px;
-margin-top:5px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px 5px;
+  margin-top: 5px;
 `;
-
-

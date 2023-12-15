@@ -73,16 +73,16 @@ const ProductsCount = styled.span`
   font-weight: bolder;
   margin-right: 5px;
   position: absolute;
-  top:-8px;
+  top: -8px;
   left: -5px;
   border-radius: 50%;
-  height:15px;
-  width:15px;
+  height: 15px;
+  width: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size:12px;
-  background-color:lightgreen;
+  font-size: 12px;
+  background-color: lightgreen;
 `;
 
 const NDiv = styled.div`

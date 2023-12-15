@@ -26,7 +26,7 @@ const OrderDiv = () => {
 export default OrderDiv;
 
 const MAINDIV = styled.div`
-  box-shadow: rgba(0, 0, 0, 0.10) 0px 10px 20px, rgba(0, 0, 0, 0.10) 0px 6px 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 20px, rgba(0, 0, 0, 0.1) 0px 6px 6px;
 `;
 
 const Div = styled.div`
