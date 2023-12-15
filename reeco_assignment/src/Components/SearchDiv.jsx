@@ -7,8 +7,8 @@ const SearchDiv = () => {
   return (
     <MainDIV>
       <Search>
-        <p>Search...</p>
-              <IoIosSearch size={ "20px"} />
+        <Text >Search...</Text>
+        <IoIosSearch size={"20px"} color={"#a3a3a3"} />
       </Search>
       <PrinterDiv>
         <OutlineBtn>Add item</OutlineBtn>
@@ -50,4 +50,7 @@ const OutlineBtn = styled.button`
   background-color: white;
   color: rgb(30, 99, 63);
   border-color: rgb(30, 99, 63);
+`;
+const Text = styled.p`
+  color: #a3a3a3;
 `;

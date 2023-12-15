@@ -34,7 +34,7 @@ const OrderSummary = () => {
 export default OrderSummary;
 
 const MainDIV = styled.div`
-  border: 1px solid;
+  border: 1px solid #a3a3a3;
   border-radius: 10px;
   width: 85%;
   margin: 20px auto;

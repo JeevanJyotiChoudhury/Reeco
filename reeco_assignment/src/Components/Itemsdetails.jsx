@@ -15,9 +15,9 @@ const Itemsdetails = () => {
 export default Itemsdetails;
 
 const MainDiv = styled.div`
-  border: 1px solid;
+  border: 1px solid #a3a3a3;
   width: 85%;
   margin: auto;
   border-radius: 10px;
-  background-color:white;
+  background-color: white;
 `;
