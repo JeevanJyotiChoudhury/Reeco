@@ -2,13 +2,21 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { GoCheck } from "react-icons/go";
 import { RxCross2 } from "react-icons/rx";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  approveProduct,
+  confirmProduct,
+  markMissing,
+  markUrgentMissing,
+} from "../Redux/action";
 
 const ProductTable = () => {
   const [products, setProducts] = useState([]);
-  const [approvedIndices, setApprovedIndices] = useState([]);
-  const [confirmationIndex, setConfirmationIndex] = useState(null);
-  const [missing, setMissing] = useState([]);
-  const [urgentMissing, setUrgentMissing] = useState([]);
+  const approvedIndices = useSelector((state) => state.approvedIndices);
+  const confirmationIndex = useSelector((state) => state.confirmationIndex);
+  const missing = useSelector((state) => state.missing);
+  const urgentMissing = useSelector((state) => state.urgentMissing);
+  const dispatch = useDispatch();
 
   const productData = () => {
     fetch("https://json-deploy-53u2.onrender.com/products")
@@ -21,26 +29,23 @@ const ProductTable = () => {
   }, []);
 
   const handleApprove = (index) => {
-    setApprovedIndices([...approvedIndices, index]);
-    closeConfirmationModal();
+    dispatch(approveProduct(index));
   };
 
   const handleConfirmation = (index) => {
-    setConfirmationIndex(index);
+    dispatch(confirmProduct(index));
   };
 
   const handleMissing = (index) => {
-    setMissing([...missing, index]);
-    closeConfirmationModal();
+    dispatch(markMissing(index));
   };
 
   const handleUrgentMissing = (index) => {
-    setUrgentMissing([...urgentMissing, index]);
-    closeConfirmationModal();
+    dispatch(markUrgentMissing(index));
   };
 
   const closeConfirmationModal = () => {
-    setConfirmationIndex(null);
+    dispatch({ type: "CONFIRM_PRODUCT", payload: null });
   };
 
   return (
@@ -158,7 +163,7 @@ const TD = styled.td`
   padding: 8px;
   text-align: left;
   border-bottom: 1px solid #ddd;
-  padding:10px 0;
+  padding: 10px 0;
   &:last-child {
     text-align: right;
     background-color: rgb(249, 249, 249);
