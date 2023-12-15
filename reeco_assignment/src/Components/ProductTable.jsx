@@ -10,7 +10,11 @@ import {
   fetchProductsSuccess,
   markMissing,
   markUrgentMissing,
+  saveEditedProduct,
 } from "../Redux/action";
+import { EditModal } from "./EditModal";
+
+
 
 const ProductTable = () => {
   const products = useSelector((state) => state.products);
@@ -19,6 +23,13 @@ const ProductTable = () => {
   const missing = useSelector((state) => state.missing);
   const urgentMissing = useSelector((state) => state.urgentMissing);
   const dispatch = useDispatch();
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editedValues, setEditedValues] = useState({
+    index: null,
+    name: "",
+    price: 0,
+    quantity: 0,
+  });
 
   useEffect(() => {
     const productData = async () => {
@@ -54,6 +65,21 @@ const ProductTable = () => {
 
   const closeConfirmationModal = () => {
     dispatch({ type: "CONFIRM_PRODUCT", payload: null });
+  };
+
+  const openEditModal = (index, name, price, quantity) => {
+    setEditedValues({ index, name, price, quantity });
+    setIsEditModalOpen(true);
+  };
+
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+    setEditedValues({ index: null, name: "", price: 0, quantity: 0 });
+  };
+
+  const saveEdit = () => {
+    dispatch(saveEditedProduct(editedValues));
+    closeEditModal();
   };
 
   return (
@@ -122,7 +148,18 @@ const ProductTable = () => {
                         onClick={() => handleConfirmation(index)}
                       />
                     </Button>
-                    <Button>Edit</Button>
+                    <Button
+                      onClick={() =>
+                        openEditModal(
+                          index,
+                          elem.name,
+                          elem.price,
+                          elem.quantity
+                        )
+                      }
+                    >
+                      Edit
+                    </Button>
                   </div>
                 </TD>
 
@@ -157,16 +194,43 @@ const ProductTable = () => {
                     </div>
                   </ConfirmationModal>
                 )}
+                {isEditModalOpen && (
+                  <EditModalDiv>
+                    <EditModal
+                      editedValues={editedValues}
+                      setEditedValues={setEditedValues}
+                      saveEdit={saveEdit}
+                      closeEditModal={closeEditModal}
+                    />
+                  </EditModalDiv>
+                )}
               </tr>
             );
           })}
         </tbody>
       </Table>
+      
     </MainDIV>
   );
 };
 
 export default ProductTable;
+
+const EditModalDiv = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  height: 400px;
+  width: 600px;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  border-radius: 15px;
+`;
+  ;
 
 const MainDIV = styled.div`
   margin: 20px auto 0;
@@ -234,7 +298,6 @@ const Button = styled.button`
   border: none;
   background: none;
   font-weight: bold;
-  
 `;
 
 const ConfirmationModal = styled.div`
@@ -272,4 +335,8 @@ const URGENTMISSING = styled.button`
   padding: 10px 15px;
   color: white;
   border-radius: 20px;
+`;
+
+const ModalWrapper = styled.div`
+  /* Your styling for the modal wrapper */
 `;

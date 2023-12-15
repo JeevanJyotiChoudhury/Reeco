@@ -42,6 +42,21 @@ export const productReducer = (state = initialState, action) => {
         products: action.payload,
         productsLength: action.payload.length,
       };
+    case "SAVE_EDITED_PRODUCT": {
+      const { index, name, price, quantity } = action.payload;
+      const updatedProducts = [...state.products];
+      updatedProducts[index] = {
+        ...updatedProducts[index],
+        name,
+        price,
+        quantity,
+      };
+
+      return {
+        ...state,
+        products: updatedProducts,
+      };
+    }
     default:
       return state;
   }
