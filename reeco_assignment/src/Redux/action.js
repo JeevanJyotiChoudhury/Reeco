@@ -1,6 +1,7 @@
 import {
   APPROVE_PRODUCT,
   CONFIRM_PRODUCT,
+  FETCH_PRODUCTS_SUCCESS,
   MARK_MISSING,
   MARK_URGENT_MISSING,
 } from "./actionTypes";
@@ -23,5 +24,9 @@ export const markMissing = (index) => ({
 export const markUrgentMissing = (index) => ({
   type: MARK_URGENT_MISSING,
   payload: index,
+});
+export const fetchProductsSuccess = (products) => ({
+  type: FETCH_PRODUCTS_SUCCESS,
+  payload: products,
 });
 

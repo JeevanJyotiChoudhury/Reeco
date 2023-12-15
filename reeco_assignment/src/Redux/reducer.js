@@ -1,6 +1,7 @@
 import {
   APPROVE_PRODUCT,
   CONFIRM_PRODUCT,
+  FETCH_PRODUCTS_SUCCESS,
   MARK_MISSING,
   MARK_URGENT_MISSING,
 } from "./actionTypes";
@@ -10,6 +11,7 @@ const initialState = {
   confirmationIndex: null,
   missing: [],
   urgentMissing: [],
+  products: [],
 };
 
 export const productReducer = (state = initialState, action) => {
@@ -33,6 +35,8 @@ export const productReducer = (state = initialState, action) => {
         urgentMissing: [...state.urgentMissing, action.payload],
         confirmationIndex: null,
       };
+    case FETCH_PRODUCTS_SUCCESS:
+      return { ...state, products: action.payload };
     default:
       return state;
   }

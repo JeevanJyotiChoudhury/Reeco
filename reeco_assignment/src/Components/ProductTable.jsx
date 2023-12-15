@@ -6,27 +6,34 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   approveProduct,
   confirmProduct,
+  fetchProductsSuccess,
   markMissing,
   markUrgentMissing,
 } from "../Redux/action";
 
 const ProductTable = () => {
-  const [products, setProducts] = useState([]);
+   const products = useSelector((state) => state.products);
   const approvedIndices = useSelector((state) => state.approvedIndices);
   const confirmationIndex = useSelector((state) => state.confirmationIndex);
   const missing = useSelector((state) => state.missing);
   const urgentMissing = useSelector((state) => state.urgentMissing);
   const dispatch = useDispatch();
 
-  const productData = () => {
-    fetch("https://json-deploy-53u2.onrender.com/products")
-      .then((res) => res.json())
-      .then((d) => setProducts(d));
-  };
-
   useEffect(() => {
+    const productData = async () => {
+      try {
+        const response = await fetch(
+          "https://json-deploy-53u2.onrender.com/products"
+        );
+        const data = await response.json();
+        dispatch(fetchProductsSuccess(data));
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
     productData();
-  }, []);
+  }, [dispatch]);
 
   const handleApprove = (index) => {
     dispatch(approveProduct(index));

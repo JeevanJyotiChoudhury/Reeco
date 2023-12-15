@@ -16,4 +16,5 @@ export default OrderDetails;
 
 const BACKGROUND = styled.div`
   background-color: #fbfbfb;
+  margin-bottom:80px;
 `;
