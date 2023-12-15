@@ -104,24 +104,26 @@ const ProductTable = () => {
                   )}
                 </TD>
                 <TD>
-                  <Button onClick={() => handleApprove(index)}>
-                    <GoCheck
-                      style={{ color: isApproved ? "green" : "black" }}
-                    />
-                  </Button>
-                  <Button>
-                    <RxCross2
-                      style={{
-                        color: isMissing
-                          ? "orange"
-                          : isUrgentMissing
-                          ? "red"
-                          : "black",
-                      }}
-                      onClick={() => handleConfirmation(index)}
-                    />
-                  </Button>
-                  <Button>Edit</Button>
+                  <div className="buttons-container">
+                    <Button onClick={() => handleApprove(index)}>
+                      <GoCheck
+                        style={{ color: isApproved ? "green" : "black" }}
+                      />
+                    </Button>
+                    <Button>
+                      <RxCross2
+                        style={{
+                          color: isMissing
+                            ? "orange"
+                            : isUrgentMissing
+                            ? "red"
+                            : "black",
+                        }}
+                        onClick={() => handleConfirmation(index)}
+                      />
+                    </Button>
+                    <Button>Edit</Button>
+                  </div>
                 </TD>
 
                 {confirmationIndex === index && (
@@ -177,30 +179,47 @@ const Table = styled.table`
 `;
 
 const TD = styled.td`
+  position: relative;
   padding: 8px;
   text-align: left;
   border-bottom: 1px solid #ddd;
   padding: 10px 0;
+
   &:last-child {
     text-align: right;
     background-color: rgb(249, 249, 249);
+    width: 15%;
   }
+
   &:first-child {
     width: 4%;
   }
+
   &:nth-child(2) {
     width: 25%;
   }
+
   &:nth-child(3) {
     width: 10%;
   }
+
   &:nth-child(4) {
     width: 10%;
   }
+
   &:nth-child(5) {
     width: 10%;
   }
   &:nth-child(7) {
+    background-color: rgb(249, 249, 249);
+  }
+
+  .buttons-container {
+    position: absolute;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     background-color: rgb(249, 249, 249);
   }
 `;
@@ -215,6 +234,7 @@ const Button = styled.button`
   border: none;
   background: none;
   font-weight: bold;
+  
 `;
 
 const ConfirmationModal = styled.div`
