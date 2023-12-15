@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { GoCheck } from "react-icons/go";
 import { RxCross2 } from "react-icons/rx";
 import { useSelector, useDispatch } from "react-redux";
+import Avocado from "../Asset/Avocado Hass.jpg"
 import {
   approveProduct,
   confirmProduct,
@@ -60,6 +61,7 @@ const ProductTable = () => {
       <Table>
         <thead>
           <tr>
+            <TH></TH>
             <TH>Product name</TH>
             <TH>Brand</TH>
             <TH>Price</TH>
@@ -77,6 +79,9 @@ const ProductTable = () => {
 
             return (
               <tr key={index}>
+                <TD>
+                  <img src={Avocado} alt="Avocardo" width="30px" height="30px" />
+                </TD>
                 <TD>{elem.name}</TD>
                 <TD>{elem.brand}</TD>
                 <TD>{elem.price}</TD>
@@ -175,11 +180,11 @@ const TD = styled.td`
     text-align: right;
     background-color: rgb(249, 249, 249);
   }
-  &:first-child {
-    width: 25%;
+  &:first-child{
+    width:4%;
   }
   &:nth-child(2) {
-    width: 10%;
+    width: 25%;
   }
   &:nth-child(3) {
     width: 10%;
@@ -187,7 +192,10 @@ const TD = styled.td`
   &:nth-child(4) {
     width: 10%;
   }
-  &:nth-child(6) {
+  &:nth-child(5) {
+    width: 10%;
+  }
+  &:nth-child(7) {
     background-color: rgb(249, 249, 249);
   }
 `;

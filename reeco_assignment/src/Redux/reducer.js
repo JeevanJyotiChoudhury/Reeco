@@ -12,6 +12,7 @@ const initialState = {
   missing: [],
   urgentMissing: [],
   products: [],
+  productsLength: 0,
 };
 
 export const productReducer = (state = initialState, action) => {
@@ -36,7 +37,11 @@ export const productReducer = (state = initialState, action) => {
         confirmationIndex: null,
       };
     case FETCH_PRODUCTS_SUCCESS:
-      return { ...state, products: action.payload };
+       return {
+         ...state,
+         products: action.payload,
+         productsLength: action.payload.length,
+       };
     default:
       return state;
   }
