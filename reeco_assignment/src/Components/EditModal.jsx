@@ -14,6 +14,27 @@ export const EditModal = ({
     return (editedValues.price * editedValues.quantity).toFixed(2);
   };
 
+   const handleQuantityChange = (e) => {
+     const newQuantity = parseInt(e.target.value) || 0;
+
+     if (newQuantity >= 0) {
+       setEditedValues({
+         ...editedValues,
+         quantity: newQuantity,
+       });
+     }
+  };
+  
+    const handlePriceChange = (e) => {
+      const newPrice = parseFloat(e.target.value) || 0;
+
+      if (newPrice > 0) {
+        setEditedValues({
+          ...editedValues,
+          price: newPrice,
+        });
+      }
+    };
   return (
     <ModalWrapper>
       <TOPDIV>
@@ -25,23 +46,14 @@ export const EditModal = ({
         <InputBody>
           <INPUTDIV>
             <label htmlFor="">Name: </label>
-            <input
-              type="text"
-              value={editedValues.name}
-              readOnly
-            />
+            <input type="text" value={editedValues.name} readOnly />
           </INPUTDIV>
           <INPUTDIV>
             <label htmlFor="">Price: </label>
             <input
               type="number"
               value={editedValues.price.toFixed(2)}
-              onChange={(e) =>
-                setEditedValues({
-                  ...editedValues,
-                  price: parseFloat(e.target.value) || 0,
-                })
-              }
+              onChange={handlePriceChange}
             />
           </INPUTDIV>
           <INPUTDIV>
@@ -49,12 +61,7 @@ export const EditModal = ({
             <input
               type="number"
               value={editedValues.quantity}
-              onChange={(e) =>
-                setEditedValues({
-                  ...editedValues,
-                  quantity: parseInt(e.target.value) || 0,
-                })
-              }
+              onChange={handleQuantityChange}
             />
           </INPUTDIV>
           <div>Total: ${calculateTotal()}</div>
@@ -185,4 +192,8 @@ const ButtonDiv1 = styled.button`
   background: none;
 `;
 const ModalWrapper = styled.div`
+`;
+const ErrorMessage = styled.div`
+  color: red;
+  margin-top: 5px;
 `;
