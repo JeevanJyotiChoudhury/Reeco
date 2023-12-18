@@ -101,7 +101,7 @@ export const EditModal = ({
                 selectedOption === "Price is not the same" ? "white" : "gray",
             }}
           >
-             Price is not the same
+            Price is not the same
           </OptionalBtn>
           <OptionalBtn
             onClick={() => handleOptionSelection("Other")}
@@ -117,7 +117,9 @@ export const EditModal = ({
 
       <BottomDiv>
         <ButtonDiv1 onClick={closeEditModal}>Cancel</ButtonDiv1>
-        <ButtonDiv2 onClick={saveEdit}>Save</ButtonDiv2>
+        <ButtonDiv2 onClick={() => saveEdit(editedValues.index)}>
+          Save
+        </ButtonDiv2>
       </BottomDiv>
     </ModalWrapper>
   );
@@ -185,5 +187,4 @@ const ButtonDiv1 = styled.button`
   background: none;
 `;
 const ModalWrapper = styled.div`
-  /* Your styling for the modal wrapper */
 `;

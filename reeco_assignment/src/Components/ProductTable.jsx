@@ -30,7 +30,9 @@ const ProductTable = () => {
     quantity: 0,
   });
   const [loading, setLoading] = useState(true);
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOptions, setSelectedOptions] = useState({});
+  const [isSave, setIsSave] = useState({});
+
 
   useEffect(() => {
     const productData = async () => {
@@ -50,6 +52,8 @@ const ProductTable = () => {
     productData();
   }, [dispatch]);
 
+
+  
   const handleApprove = (index) => {
     dispatch(approveProduct(index));
   };
@@ -80,14 +84,16 @@ const ProductTable = () => {
     setEditedValues({ index: null, name: "", price: 0, quantity: 0 });
   };
 
-  const saveEdit = () => {
+  const saveEdit = (index) => {
     dispatch(saveEditedProduct(editedValues));
+    setIsSave((prevIsSave) => ({ ...prevIsSave, [index]: true }));
     closeEditModal();
   };
-
-  const handleOptionSelection = (reason) => {
-    setSelectedOption(reason);
-    console.log(`Selected option: ${reason}`);
+  const handleOptionSelection = (index, reason) => {
+    setSelectedOptions((prevOptions) => ({
+      ...prevOptions,
+      [index]: reason,
+    }));
   };
 
   return (
@@ -136,6 +142,8 @@ const ProductTable = () => {
                       <MISSING>Missing</MISSING>
                     ) : isUrgentMissing ? (
                       <URGENTMISSING>Urgent missing</URGENTMISSING>
+                    ) : selectedOptions[index] && isSave[index] ? (
+                      <EDITOPTION>{selectedOptions[index]}</EDITOPTION>
                     ) : (
                       ""
                     )}
@@ -212,8 +220,10 @@ const ProductTable = () => {
                         setEditedValues={setEditedValues}
                         saveEdit={saveEdit}
                         closeEditModal={closeEditModal}
-                        handleOptionSelection={handleOptionSelection}
-                        selectedOption={selectedOption}
+                        handleOptionSelection={(reason) =>
+                          handleOptionSelection(editedValues.index, reason)
+                        }
+                        selectedOption={selectedOptions[editedValues.index]}
                       />
                     </EditModalDiv>
                   )}
@@ -342,7 +352,10 @@ const URGENTMISSING = styled.button`
   color: white;
   border-radius: 20px;
 `;
-
-const ModalWrapper = styled.div`
-  /* Your styling for the modal wrapper */
+const EDITOPTION = styled.button`
+  border: none;
+  background-color: #bb305c;
+  padding: 10px 15px;
+  color: white;
+  border-radius: 20px;
 `;
