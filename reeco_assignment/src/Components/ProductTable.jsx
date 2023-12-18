@@ -158,11 +158,12 @@ const ProductTable = () => {
                       <Button>
                         <RxCross2
                           style={{
-                            color: isMissing
-                              ? "orange"
-                              : isUrgentMissing
-                              ? "red"
-                              : "black",
+                            color:
+                              isMissing && !isApproved
+                                ? "orange"
+                                : !isApproved && isUrgentMissing
+                                ? "red"
+                                : "black",
                           }}
                           onClick={() => handleConfirmation(index)}
                         />
@@ -354,7 +355,7 @@ const URGENTMISSING = styled.button`
 `;
 const EDITOPTION = styled.button`
   border: none;
-  background-color: #bb305c;
+  background-color: #b78d66;
   padding: 10px 15px;
   color: white;
   border-radius: 20px;
