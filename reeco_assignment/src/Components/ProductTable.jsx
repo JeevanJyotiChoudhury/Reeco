@@ -152,11 +152,13 @@ const ProductTable = () => {
                     <div className="buttons-container">
                       <Button onClick={() => handleApprove(index)}>
                         <GoCheck
+                          size={"23px"}
                           style={{ color: isApproved ? "green" : "black" }}
                         />
                       </Button>
                       <Button>
                         <RxCross2
+                          size={"23px"}
                           style={{
                             color:
                               isMissing && !isApproved
@@ -194,7 +196,10 @@ const ProductTable = () => {
                         }}
                       >
                         <h2>Missing Product</h2>
-                        <RxCross2 onClick={closeConfirmationModal} />
+                        <RxCross2
+                          onClick={closeConfirmationModal}
+                          size={"25px"}
+                        />
                       </div>
                       <p>Is {elem.name} is UEGENT......?</p>
                       <div

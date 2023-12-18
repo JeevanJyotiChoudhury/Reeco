@@ -18,7 +18,7 @@ export const EditModal = ({
     <ModalWrapper>
       <TOPDIV>
         <p>{editedValues.name}</p>
-        <RxCross2 onClick={closeEditModal} />
+        <RxCross2 onClick={closeEditModal} size={"25px"} />
       </TOPDIV>
       <EditBody>
         <img src={Avocado} alt="Avocado" width={"35%"} />
@@ -28,22 +28,15 @@ export const EditModal = ({
             <input
               type="text"
               value={editedValues.name}
-              onChange={(e) =>
-                setEditedValues({ ...editedValues, name: e.target.value })
-              }
+              readOnly
             />
           </INPUTDIV>
           <INPUTDIV>
             <label htmlFor="">Price: </label>
             <input
               type="number"
+              readOnly
               value={editedValues.price.toFixed(2)}
-              onChange={(e) =>
-                setEditedValues({
-                  ...editedValues,
-                  price: parseFloat(e.target.value) || 0,
-                })
-              }
             />
           </INPUTDIV>
           <INPUTDIV>
