@@ -13,8 +13,7 @@ import {
   saveEditedProduct,
 } from "../Redux/action";
 import { EditModal } from "./EditModal";
-
-
+import Loader from "./Loader";
 
 const ProductTable = () => {
   const products = useSelector((state) => state.products);
@@ -30,6 +29,8 @@ const ProductTable = () => {
     price: 0,
     quantity: 0,
   });
+  const [loading, setLoading] = useState(true);
+  const [selectedOption, setSelectedOption] = useState(null);
 
   useEffect(() => {
     const productData = async () => {
@@ -41,6 +42,8 @@ const ProductTable = () => {
         dispatch(fetchProductsSuccess(data));
       } catch (error) {
         console.error("Error fetching products:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -82,134 +85,144 @@ const ProductTable = () => {
     closeEditModal();
   };
 
+  const handleOptionSelection = (reason) => {
+    setSelectedOption(reason);
+    console.log(`Selected option: ${reason}`);
+  };
+
   return (
     <MainDIV>
-      <Table>
-        <thead>
-          <tr>
-            <TH></TH>
-            <TH>Product name</TH>
-            <TH>Brand</TH>
-            <TH>Price</TH>
-            <TH>Quantity</TH>
-            <TH>Total</TH>
-            <TH>Status</TH>
-            <TH></TH>
-          </tr>
-        </thead>
-        <tbody>
-          {products?.map((elem, index) => {
-            const isApproved = approvedIndices.includes(index);
-            const isMissing = missing.includes(index);
-            const isUrgentMissing = urgentMissing.includes(index);
+      {loading ? (
+        <Loader />
+      ) : (
+        <Table>
+          <thead>
+            <tr>
+              <TH></TH>
+              <TH>Product name</TH>
+              <TH>Brand</TH>
+              <TH>Price</TH>
+              <TH>Quantity</TH>
+              <TH>Total</TH>
+              <TH>Status</TH>
+              <TH></TH>
+            </tr>
+          </thead>
+          <tbody>
+            {products?.map((elem, index) => {
+              const isApproved = approvedIndices.includes(index);
+              const isMissing = missing.includes(index);
+              const isUrgentMissing = urgentMissing.includes(index);
 
-            return (
-              <tr key={index}>
-                <TD>
-                  <img
-                    src={Avocado}
-                    alt="Avocardo"
-                    width="30px"
-                    height="30px"
-                  />
-                </TD>
-                <TD>{elem.name}</TD>
-                <TD>{elem.brand}</TD>
-                <TD>{elem.price}</TD>
-                <TD>{elem.quantity}</TD>
-                <TD>{elem.total}</TD>
-                <TD>
-                  {isApproved ? (
-                    <APPROVED>Approved</APPROVED>
-                  ) : isMissing ? (
-                    <MISSING>Missing</MISSING>
-                  ) : isUrgentMissing ? (
-                    <URGENTMISSING>Urgent missing</URGENTMISSING>
-                  ) : (
-                    ""
-                  )}
-                </TD>
-                <TD>
-                  <div className="buttons-container">
-                    <Button onClick={() => handleApprove(index)}>
-                      <GoCheck
-                        style={{ color: isApproved ? "green" : "black" }}
-                      />
-                    </Button>
-                    <Button>
-                      <RxCross2
-                        style={{
-                          color: isMissing
-                            ? "orange"
-                            : isUrgentMissing
-                            ? "red"
-                            : "black",
-                        }}
-                        onClick={() => handleConfirmation(index)}
-                      />
-                    </Button>
-                    <Button
-                      onClick={() =>
-                        openEditModal(
-                          index,
-                          elem.name,
-                          elem.price,
-                          elem.quantity
-                        )
-                      }
-                    >
-                      Edit
-                    </Button>
-                  </div>
-                </TD>
-
-                {confirmationIndex === index && (
-                  <ConfirmationModal>
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        margin: "5px auto 10px",
-                      }}
-                    >
-                      <h2>Missing Product</h2>
-                      <RxCross2 onClick={closeConfirmationModal} />
-                    </div>
-                    <p>Is {elem.name} is UEGENT......?</p>
-                    <div
-                      style={{
-                        position: "absolute",
-                        right: "20px",
-                        bottom: "30px",
-                        width: "40%",
-                        display: "flex",
-                        justifyContent: "space-around",
-                      }}
-                    >
-                      <Button onClick={() => handleMissing(index)}>No</Button>
-                      <Button onClick={() => handleUrgentMissing(index)}>
-                        Yes
+              return (
+                <tr key={index}>
+                  <TD>
+                    <img
+                      src={Avocado}
+                      alt="Avocardo"
+                      width="30px"
+                      height="30px"
+                    />
+                  </TD>
+                  <TD>{elem.name}</TD>
+                  <TD>{elem.brand}</TD>
+                  <TD>${elem.price} / 6*1LB</TD>
+                  <TD>{elem.quantity} x 6 + 1LB</TD>
+                  <TD>${(elem.price * elem.quantity).toFixed(2)}</TD>
+                  <TD>
+                    {isApproved ? (
+                      <APPROVED>Approved</APPROVED>
+                    ) : isMissing ? (
+                      <MISSING>Missing</MISSING>
+                    ) : isUrgentMissing ? (
+                      <URGENTMISSING>Urgent missing</URGENTMISSING>
+                    ) : (
+                      ""
+                    )}
+                  </TD>
+                  <TD>
+                    <div className="buttons-container">
+                      <Button onClick={() => handleApprove(index)}>
+                        <GoCheck
+                          style={{ color: isApproved ? "green" : "black" }}
+                        />
+                      </Button>
+                      <Button>
+                        <RxCross2
+                          style={{
+                            color: isMissing
+                              ? "orange"
+                              : isUrgentMissing
+                              ? "red"
+                              : "black",
+                          }}
+                          onClick={() => handleConfirmation(index)}
+                        />
+                      </Button>
+                      <Button
+                        onClick={() =>
+                          openEditModal(
+                            index,
+                            elem.name,
+                            elem.price,
+                            elem.quantity
+                          )
+                        }
+                      >
+                        Edit
                       </Button>
                     </div>
-                  </ConfirmationModal>
-                )}
-                {isEditModalOpen && (
-                  <EditModalDiv>
-                    <EditModal
-                      editedValues={editedValues}
-                      setEditedValues={setEditedValues}
-                      saveEdit={saveEdit}
-                      closeEditModal={closeEditModal}
-                    />
-                  </EditModalDiv>
-                )}
-              </tr>
-            );
-          })}
-        </tbody>
-      </Table>
-      
+                  </TD>
+
+                  {confirmationIndex === index && (
+                    <ConfirmationModal>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          margin: "5px auto 10px",
+                        }}
+                      >
+                        <h2>Missing Product</h2>
+                        <RxCross2 onClick={closeConfirmationModal} />
+                      </div>
+                      <p>Is {elem.name} is UEGENT......?</p>
+                      <div
+                        style={{
+                          position: "absolute",
+                          right: "20px",
+                          bottom: "30px",
+                          width: "40%",
+                          display: "flex",
+                          justifyContent: "space-around",
+                        }}
+                      >
+                        <Button onClick={() => handleMissing(index)}>No</Button>
+                        <Button onClick={() => handleUrgentMissing(index)}>
+                          Yes
+                        </Button>
+                      </div>
+                    </ConfirmationModal>
+                  )}
+                  {isEditModalOpen && (
+                    <EditModalDiv>
+                      <EditModal
+                        editedValues={editedValues}
+                        setEditedValues={setEditedValues}
+                        saveEdit={saveEdit}
+                        closeEditModal={closeEditModal}
+                        handleOptionSelection={handleOptionSelection}
+                        selectedOption={selectedOption}
+                      />
+                    </EditModalDiv>
+                  )}
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
+      )}
     </MainDIV>
   );
 };
@@ -230,8 +243,6 @@ const EditModalDiv = styled.div`
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   border-radius: 15px;
 `;
-  ;
-
 const MainDIV = styled.div`
   margin: 20px auto 0;
   width: 95%;
@@ -251,7 +262,6 @@ const TD = styled.td`
 
   &:last-child {
     text-align: right;
-    background-color: rgb(249, 249, 249);
     width: 15%;
   }
 
@@ -274,9 +284,6 @@ const TD = styled.td`
   &:nth-child(5) {
     width: 10%;
   }
-  &:nth-child(7) {
-    background-color: rgb(249, 249, 249);
-  }
 
   .buttons-container {
     position: absolute;
@@ -284,7 +291,6 @@ const TD = styled.td`
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    background-color: rgb(249, 249, 249);
   }
 `;
 

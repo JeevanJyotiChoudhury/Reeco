@@ -2,13 +2,18 @@ import styled from "styled-components";
 import { RxCross2 } from "react-icons/rx";
 import Avocado from "../Asset/Avocado Hass.jpg";
 
-
 export const EditModal = ({
   editedValues,
   setEditedValues,
   saveEdit,
   closeEditModal,
+  handleOptionSelection,
+  selectedOption,
 }) => {
+  const calculateTotal = () => {
+    return (editedValues.price * editedValues.quantity).toFixed(2);
+  };
+
   return (
     <ModalWrapper>
       <TOPDIV>
@@ -32,7 +37,7 @@ export const EditModal = ({
             <label htmlFor="">Price: </label>
             <input
               type="number"
-              value={editedValues.price}
+              value={editedValues.price.toFixed(2)}
               onChange={(e) =>
                 setEditedValues({
                   ...editedValues,
@@ -54,16 +59,60 @@ export const EditModal = ({
               }
             />
           </INPUTDIV>
+          <div>Total: ${calculateTotal()}</div>
         </InputBody>
       </EditBody>
       <OPTIONS>
-              <h3>Choose Reason(Optional)</h3>
-              <div>
-                  <OptionalBtn>Missing Product</OptionalBtn>
-                  <OptionalBtn>Quantity is not the same</OptionalBtn>
-                  <OptionalBtn>Price is not the same</OptionalBtn>
-                  <OptionalBtn>Other</OptionalBtn>
-              </div>
+        <h3>Choose Reason(Optional)</h3>
+        <div>
+          <OptionalBtn
+            onClick={() => handleOptionSelection("Missing Product")}
+            style={{
+              backgroundColor:
+                selectedOption === "Missing Product" ? "green" : "initial",
+              color: selectedOption === "Missing Product" ? "white" : "gray",
+            }}
+          >
+            Missing Product
+          </OptionalBtn>
+          <OptionalBtn
+            onClick={() => handleOptionSelection("Quantity is not the same")}
+            style={{
+              backgroundColor:
+                selectedOption === "Quantity is not the same"
+                  ? "green"
+                  : "initial",
+              color:
+                selectedOption === "Quantity is not the same"
+                  ? "white"
+                  : "gray",
+            }}
+          >
+            Quantity is not the same
+          </OptionalBtn>
+          <OptionalBtn
+            onClick={() => handleOptionSelection("Price is not the same")}
+            style={{
+              backgroundColor:
+                selectedOption === "Price is not the same"
+                  ? "green"
+                  : "initial",
+              color:
+                selectedOption === "Price is not the same" ? "white" : "gray",
+            }}
+          >
+             Price is not the same
+          </OptionalBtn>
+          <OptionalBtn
+            onClick={() => handleOptionSelection("Other")}
+            style={{
+              backgroundColor: selectedOption === "Other" ? "green" : "initial",
+              color: selectedOption === "Other" ? "white" : "gray",
+            }}
+          >
+            Other
+          </OptionalBtn>
+        </div>
       </OPTIONS>
 
       <BottomDiv>
@@ -82,7 +131,7 @@ const TOPDIV = styled.div`
 const INPUTDIV = styled.div`
   display: flex;
   justify-content: space-between;
-  margin:20px 40px ;
+  margin: 20px 40px;
 `;
 
 const InputBody = styled.div`
@@ -92,13 +141,13 @@ const InputBody = styled.div`
   flex-direction: column;
 `;
 
-
 const EditBody = styled.div`
   display: flex;
   justify-content: space-between;
 `;
 const OPTIONS = styled.div`
-  margin-top:20px;
+  margin-top: 20px;
+  cursor: pointer;
 `;
 const BottomDiv = styled.div`
   position: absolute;
@@ -117,7 +166,7 @@ const ButtonDiv2 = styled.button`
   border-radius: 30px;
   padding: 10px 20px;
 `;
-const OptionalBtn=styled.button`
+const OptionalBtn = styled.button`
   border: 1px solid gray;
   color: gray;
   font-weight: bold;
@@ -125,6 +174,7 @@ const OptionalBtn=styled.button`
   padding: 10px 12px;
   background: none;
   margin: 20px 5px;
+  cursor: pointer;
 `;
 const ButtonDiv1 = styled.button`
   border: 1px solid rgb(30, 99, 63);
