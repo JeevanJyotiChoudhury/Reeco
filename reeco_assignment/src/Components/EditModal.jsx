@@ -35,8 +35,13 @@ export const EditModal = ({
             <label htmlFor="">Price: </label>
             <input
               type="number"
-              readOnly
               value={editedValues.price.toFixed(2)}
+              onChange={(e) =>
+                setEditedValues({
+                  ...editedValues,
+                  price: parseFloat(e.target.value) || 0,
+                })
+              }
             />
           </INPUTDIV>
           <INPUTDIV>
